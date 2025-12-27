@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fantasy Gestión</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Pantalla de Inicio -->
+  <div id="inicio" class="screen">
+    <img src="images/portada.PNG" alt="Portada" id="portada">
+    <h1>FANTASY GESTIÓN</h1>
+    <button id="historiaBtn">Historia</button>
+    <button id="arcadeBtn">Arcade</button>
+  </div>
 
+  <!-- Pantalla Historia -->
+  <div id="historia" class="screen hidden">
+    <h2>Próximamente</h2>
+  </div>
+
+  <!-- Pantalla Arcade -->
+  <div id="arcade" class="screen hidden">
+    <h2>Selecciona tu Avatar</h2>
+    <div id="avatarSelector">
+      <img src="images/avatar1.png" alt="Avatar 1" class="avatar">
+      <img src="images/avatar2.png" alt="Avatar 2" class="avatar">
+    </div>
+    <button id="continuarAvatarBtn" class="hidden">Continuar</button>
+  </div>
+
+  <!-- Pantalla de Selección de Personajes -->
+  <div id="personajes" class="screen hidden">
+    <h2>Selecciona tus 6 Personajes</h2>
+    <div id="personajeSelector">
+      <!-- Aquí aparecerán los personajes -->
+    </div>
+    <button id="continuarPersonajesBtn">Continuar</button>
+  </div>
+
+  <!-- Pantalla del Juego -->
+  <div id="juego" class="screen hidden">
+    <div id="marcador">
+      <span>Puntos: <span id="puntos">0</span></span>
+    </div>
+    <div id="cuadricula">
+      <!-- La cuadrícula con puntos aparecerá aquí -->
+    </div>
+    <div id="personajesSeleccionados">
+      <!-- Los personajes seleccionados -->
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
