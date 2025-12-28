@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gestión Ambiental</title>
+  <title>Gestión Ambiental - Prototipo</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -62,10 +62,19 @@
 
   <div id="missionModal" class="modal">
     <div class="modal-card">
-      <h3 id="missionTitle">Misión</h3>
-      <p id="missionText"></p>
+      <h3 id="missionTitle">Título</h3>
+      <p id="missionText" style="font-size: 0.9rem; color: #ccc; margin-bottom: 15px;"></p>
       <div id="charactersGrid" class="grid"></div>
-      <button id="confirmBtn" class="btn">ASIGNAR</button>
+      <button id="confirmBtn" class="btn">ASIGNAR EQUIPO</button>
+    </div>
+  </div>
+
+  <div id="rouletteModal" class="modal">
+    <div class="modal-card roulette-card">
+      <h3 id="rouletteStatus">Resolviendo...</h3>
+      <div class="roulette-box" id="rouletteWheel">0%</div>
+      <div id="rouletteResult" class="roulette-result"></div>
+      <button id="closeRouletteBtn" class="btn hidden">CONTINUAR</button>
     </div>
   </div>
 
