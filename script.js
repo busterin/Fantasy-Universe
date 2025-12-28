@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", setAppHeightVar);
   window.addEventListener("orientationchange", setAppHeightVar);
 
+  // Declaración de pantallas
   const introScreen = document.getElementById("introScreen");
   const introStartBtn = document.getElementById("introStartBtn");
   const startScreen = document.getElementById("startScreen");
@@ -18,22 +19,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const teamConfirmBtn = document.getElementById("teamConfirmBtn");
   const gameRoot = document.getElementById("gameRoot");
 
-  let selectedTeamIds = new Set(); // Para almacenar personajes seleccionados
+  let selectedTeamIds = new Set(); // Para almacenar los personajes seleccionados
 
-  // Pantalla de inicio
+  // Función para la pantalla de inicio
   introStartBtn.addEventListener("click", () => {
     introScreen.classList.add("hidden");
     startScreen.classList.remove("hidden");
   });
 
-  // Pantalla de selección de avatar
+  // Función para la pantalla de selección de avatar
   startBtn.addEventListener("click", () => {
     startScreen.classList.add("hidden");
     teamScreen.classList.remove("hidden");
-    renderTeamSelection();  // Renderiza los personajes en la selección
+    renderTeamSelection();  // Renderiza los personajes
   });
 
-  // Renderización de los personajes seleccionables
+  // Función para renderizar los personajes
   function renderTeamSelection() {
     teamGrid.innerHTML = ""; // Limpiar el grid de personajes
     TEAM_MEMBERS.forEach(p => {
@@ -47,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="team-card-name">${p.name}</div>
       `;
 
-      // Agregar la acción para seleccionar o deseleccionar el personaje
+      // Acción para seleccionar o deseleccionar el personaje
       btn.addEventListener("click", () => {
         if (isSelected) {
           selectedTeamIds.delete(p.id);
@@ -62,10 +63,10 @@ document.addEventListener("DOMContentLoaded", () => {
       teamGrid.appendChild(btn); // Añadir el botón con el personaje al grid
     });
 
-    updateTeamUI(); // Actualizar la interfaz de usuario
+    updateTeamUI(); // Actualizar la interfaz
   }
 
-  // Actualiza el conteo de personajes seleccionados y habilita el botón de confirmación
+  // Función para actualizar el estado de la selección de personajes
   function updateTeamUI() {
     const n = selectedTeamIds.size;
     teamCountEl.textContent = String(n);
@@ -78,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Confirmación de la selección de personajes y transición al juego
+  // Función para confirmar la selección de personajes y pasar al juego
   teamConfirmBtn.addEventListener("click", () => {
     if (selectedTeamIds.size !== 6) return; // Asegurarse de que se seleccionaron 6 personajes
 
@@ -88,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
     startGame(); // Comienza el juego
   });
 
-  // Función para empezar el juego
+  // Función para iniciar el juego
   function startGame() {
     console.log("Iniciando el juego...");
     spawnMissionPoints(); // Crear puntos de misión (para que aparezcan los puntos rojos)
