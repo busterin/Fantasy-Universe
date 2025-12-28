@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gestión Ambiental - Prototipo</title>
+  <title>Gestión Ambiental</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -14,8 +14,7 @@
         <h1 class="intro-title">GESTIÓN AMBIENTAL</h1>
         <img class="intro-logo" src="images/logo.png" alt="Logo" />
         <div class="intro-actions">
-          <button id="introStartBtn" class="btn" type="button">COMENZAR</button>
-          <button id="introInfoBtn" class="icon-btn" type="button">ℹ️</button>
+          <button id="introStartBtn" class="btn">COMENZAR</button>
         </div>
       </div>
     </section>
@@ -23,55 +22,38 @@
     <section id="startScreen" class="start hidden">
       <div class="start-card">
         <h2 class="start-title">Elige tu avatar</h2>
-        <div class="carousel">
-          <button id="prevAvatarBtn" class="carousel-btn" type="button">‹</button>
-          <div class="carousel-center">
-            <img id="avatarPreviewImg" class="carousel-img" src="images/avatar1.png" alt="Avatar" />
+        <div class="carousel-container">
+          <button id="prevAvatarBtn" class="carousel-btn">‹</button>
+          <div class="carousel-main">
+            <img id="avatarPreviewImg" src="images/avatar1.png" alt="Avatar" />
           </div>
-          <button id="nextAvatarBtn" class="carousel-btn" type="button">›</button>
+          <button id="nextAvatarBtn" class="carousel-btn">›</button>
         </div>
-        <button id="startBtn" class="btn" type="button">CONTINUAR</button>
+        <button id="startBtn" class="btn">CONTINUAR</button>
       </div>
     </section>
 
     <section id="teamScreen" class="start hidden">
       <div class="start-card team-selection-card">
         <h2 class="start-title">Selecciona tu equipo</h2>
-        <p class="start-subtitle">Elige 6 personajes para las misiones.</p>
-        
-        <div class="team-top">
-          <div class="team-counter">Seleccionados: <span id="teamCount">0</span>/6</div>
-        </div>
-
-        <div id="teamGrid" class="team-grid">
-          </div>
-
-        <div class="modal-actions end">
-          <button id="teamConfirmBtn" class="btn" type="button" disabled>CONFIRMAR EQUIPO</button>
+        <div class="team-counter">Seleccionados: <span id="teamCount">0</span>/6</div>
+        <div id="teamGrid" class="team-grid"></div>
+        <div class="modal-actions">
+          <button id="teamConfirmBtn" class="btn" disabled>CONFIRMAR EQUIPO</button>
         </div>
       </div>
     </section>
 
     <div id="gameRoot" class="game hidden">
       <header class="topbar">
-        <div class="brand">
-          <div class="dot"></div>
-          <div>
-            <div class="title">Gestión Ambiental</div>
-            <div class="subtitle">Resuelve las misiones</div>
-          </div>
-        </div>
+        <div class="brand"><b>GESTIÓN AMBIENTAL</b></div>
         <div class="hud">
-          <div class="hud-card">
-            <div class="hud-label">Misiones</div>
-            <div id="progress" class="hud-value">0</div>
-          </div>
+          <div class="hud-card">Misiones: <span id="progress">0</span></div>
         </div>
       </header>
-
       <main class="stage">
         <div id="map" class="map">
-          <img id="playerImg" class="buster-img" src="images/avatar1.png" alt="Jugador" />
+          <img id="playerImg" class="buster-img" src="images/avatar1.png" alt="Avatar" />
         </div>
         <div id="teamDock" class="team-dock"></div>
       </main>
@@ -80,28 +62,10 @@
 
   <div id="missionModal" class="modal">
     <div class="modal-card">
-      <div class="modal-head">
-        <h3 id="missionTitle">Misión</h3>
-        <button id="closeModalBtn" class="icon-btn">✕</button>
-      </div>
-      <p id="missionText" class="modal-text"></p>
-      <div class="divider"></div>
-      <div class="section-title">Asignar personajes (1-2)</div>
+      <h3 id="missionTitle">Misión</h3>
+      <p id="missionText"></p>
       <div id="charactersGrid" class="grid"></div>
-      <div class="modal-actions end">
-        <button id="confirmBtn" class="btn">ASIGNAR</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="finalModal" class="modal">
-    <div class="modal-card">
-      <h2>¡Tiempo agotado!</h2>
-      <div class="final-score">
-        <span>Puntuación total:</span>
-        <span id="finalScore">0</span>
-      </div>
-      <button id="playAgainBtn" class="btn">JUGAR DE NUEVO</button>
+      <button id="confirmBtn" class="btn">ASIGNAR</button>
     </div>
   </div>
 
