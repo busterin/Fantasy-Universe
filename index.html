@@ -8,12 +8,11 @@
 </head>
 <body>
   <div class="app">
-    <!-- INTRO: Portada con Título y Botón -->
+    <!-- INTRO (Portada) -->
     <section id="introScreen" class="intro">
       <div class="intro-content">
         <div class="intro-title">Gestión ambiental</div>
         <img class="intro-logo" src="images/logo.png" alt="Logo" />
-
         <div class="intro-actions">
           <button id="introStartBtn" class="btn intro-btn" type="button">COMENZAR</button>
           <button id="introInfoBtn" class="icon-btn intro-info-btn" type="button" aria-label="Info">ℹ️</button>
@@ -21,7 +20,7 @@
       </div>
     </section>
 
-    <!-- SELECCIÓN DE AVATAR -->
+    <!-- SELECCIONAR AVATAR -->
     <section id="startScreen" class="start hidden">
       <div class="start-card">
         <div class="start-title">Elige tu avatar</div>
@@ -29,11 +28,9 @@
 
         <div class="carousel">
           <button id="prevAvatarBtn" class="carousel-btn" type="button" aria-label="Anterior">‹</button>
-
           <div class="carousel-center">
             <img id="avatarPreviewImg" class="carousel-img" src="images/avatar1.png" alt="Avatar" />
           </div>
-
           <button id="nextAvatarBtn" class="carousel-btn" type="button" aria-label="Siguiente">›</button>
         </div>
 
@@ -46,7 +43,7 @@
       </div>
     </section>
 
-    <!-- SELECCIÓN DE PERSONAJES -->
+    <!-- SELECCIÓN EQUIPO (6) -->
     <section id="teamScreen" class="start hidden">
       <div class="start-card">
         <div class="start-title">Selecciona 6 personajes. Estos serán los disponibles para superar las misiones.</div>
@@ -57,11 +54,6 @@
         </div>
 
         <div id="teamGrid" class="team-grid"></div>
-
-        <!-- Fila para los personajes debajo de la cuadrícula -->
-        <div id="characterRow" class="character-row">
-          <!-- Los personajes aparecerán aquí -->
-        </div>
 
         <div class="modal-actions end" style="margin-top:12px;">
           <button id="teamConfirmBtn" class="btn" type="button" disabled>Confirmar</button>
@@ -115,33 +107,6 @@
           </div>
         </div>
         <button id="closeInfoBtn" class="icon-btn" type="button" aria-label="Cerrar">✕</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL MISIÓN -->
-  <div id="missionModal" class="modal" aria-hidden="true">
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="missionTitle">
-      <div class="modal-head">
-        <div>
-          <div id="missionTitle" class="modal-title">Misión</div>
-          <div id="missionText" class="modal-text">Texto de misión</div>
-        </div>
-        <button id="closeModalBtn" class="icon-btn" type="button" aria-label="Cerrar">✕</button>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="section">
-        <div class="section-title">Elige 1 o 2 personajes</div>
-        <div id="charactersGrid" class="grid"></div>
-        <div id="pickHint" class="hint">Selecciona al menos 1 personaje.</div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="modal-actions end">
-        <button id="confirmBtn" class="btn" type="button">Confirmar</button>
       </div>
     </div>
   </div>
