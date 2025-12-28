@@ -1,83 +1,101 @@
 // Variables de configuración
 let grid = document.getElementById("grid");
 let charactersContainer = document.getElementById("characters");
-let missionStatus = document.getElementById("mission-status");
-let missionProgress = document.getElementById("mission-progress");
-let timerDisplay = document.getElementById("timer");
+let missionPopup = document.getElementById("mission-popup");
+let missionTitle = document.getElementById("mission-title");
+let missionDescription = document.getElementById("mission-description");
+let assignCharacterBtn = document.getElementById("assign-character");
+let closePopupBtn = document.getElementById("close-popup");
 let rouletteContainer = document.getElementById("roulette");
 let rouletteResult = document.getElementById("roulette-result");
+let timerDisplay = document.getElementById("timer");
 
 const characters = ["Luis", "Ángel", "Mario", "Vera", "María"];
 const points = [];
+const missions = [
+    { title: "Misión 1", description: "Recoge recursos de la zona A." },
+    { title: "Misión 2", description: "Ayuda a los pobladores en la zona B." },
+    { title: "Misión 3", description: "Protege la infraestructura en la zona C." },
+    { title: "Misión 4", description: "Recoge suministros en la zona D." },
+    { title: "Misión 5", description: "Repara las máquinas en la zona E." }
+];
 
-// Función para generar los puntos en la cuadrícula
+// Función para crear los puntos en la cuadrícula
 function createGrid() {
     for (let i = 0; i < 20; i++) {
         let point = document.createElement("div");
         point.classList.add("grid-point");
-        point.addEventListener("click", () => assignMission(i));
+        point.addEventListener("click", () => openMissionPopup(i));
         grid.appendChild(point);
         points.push(point);
     }
+
+    // Hacer aparecer los puntos progresivamente
+    let index = 0;
+    const interval = setInterval(() => {
+        if (index < points.length) {
+            points[index].style.opacity = 1;
+            index++;
+        } else {
+            clearInterval(interval);
+        }
+    }, 500); // Tiempo para que aparezcan los puntos
 }
 
-// Función para crear los personajes disponibles
-function createCharacters() {
-    characters.forEach(character => {
-        let charDiv = document.createElement("div");
-        charDiv.classList.add("character");
-        charDiv.innerHTML = character;
-        charDiv.addEventListener("click", () => selectCharacter(character));
-        charactersContainer.appendChild(charDiv);
-    });
+// Función para mostrar la ventana emergente de la misión
+let currentMissionIndex = null;
+function openMissionPopup(index) {
+    currentMissionIndex = index;
+    let mission = missions[index];
+
+    missionTitle.textContent = mission.title;
+    missionDescription.textContent = mission.description;
+    
+    missionPopup.style.display = "flex";
 }
 
-// Función para asignar una misión
-let currentMission = null;
+// Función para asignar personaje a la misión
 let assignedCharacter = null;
-let missionTimeout;
+assignCharacterBtn.addEventListener("click", () => {
+    if (assignedCharacter) {
+        // Empezar la ruleta
+        activateRoulette();
+    } else {
+        alert("Primero selecciona un personaje.");
+    }
+});
 
-function assignMission(index) {
-    if (currentMission) return; // Si ya hay una misión en progreso, no hacer nada
-
-    currentMission = index;
-    missionStatus.innerText = `Misión asignada a punto ${index + 1}.`;
-
-    // Contar el tiempo de la misión
-    missionTimeout = setTimeout(() => {
-        missionStatus.innerText = "La misión ha fracasado. ¡Sigue intentándolo!";
-        missionProgress.innerHTML = "";
-        currentMission = null;
-    }, 120000); // Misión dura 2 minutos
-
-    // Activar la ruleta si hay personaje asignado
-    rouletteContainer.classList.remove("hidden");
-}
-
-// Función para seleccionar personaje
+// Función para seleccionar un personaje
 function selectCharacter(character) {
-    if (!currentMission) return;
-
     assignedCharacter = character;
-    missionStatus.innerText = `Asignando ${character} a la misión...`;
-    clearTimeout(missionTimeout);
-
-    // Empezar ruleta
-    activateRoulette();
+    alert(`Personaje ${character} asignado a la misión.`);
 }
 
 // Función para activar la ruleta
 function activateRoulette() {
+    missionPopup.style.display = "none"; // Cerrar popup
+
+    rouletteContainer.classList.remove("hidden");
     rouletteResult.innerText = "0%";
+    
     setTimeout(() => {
         const successChance = Math.random() * 100;
         rouletteResult.innerText = `${Math.round(successChance)}%`;
 
-        missionProgress.innerHTML = successChance > 50 ? "¡Misión completada con éxito!" : "Misión fallida.";
-        currentMission = null;
-        rouletteContainer.classList.add("hidden");
-    }, 30000); // Tarda 30 segundos en resolver la misión
+        setTimeout(() => {
+            if (successChance > 50) {
+                alert("¡Misión completada con éxito!");
+            } else {
+                alert("La misión ha fallado.");
+            }
+        }, 1000); // Resultado de la misión después de 1 segundo
+    }, 30000); // Ruleta tarda 30 segundos
 }
+
+// Función para cerrar el popup
+closePopupBtn.addEventListener("click", () => {
+    missionPopup.style.display = "none";
+});
 
 // Función para actualizar el temporizador
 function startTimer() {
