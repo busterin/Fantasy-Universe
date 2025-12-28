@@ -1,79 +1,90 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Función que genera los puntos rojos en el mapa
-  function createMissionPoint(mission) {
-    const point = document.createElement("div");
-    point.className = "point";
-    point.setAttribute("role", "button");
-    point.setAttribute("tabindex", "0");
-    point.setAttribute("aria-label", `Misión: ${mission.title}`);
+  function setAppHeightVar() {
+    const h = window.innerHeight;
+    document.documentElement.style.setProperty("--appH", `${h}px`);
+  }
+  setAppHeightVar();
+  window.addEventListener("resize", setAppHeightVar);
+  window.addEventListener("orientationchange", setAppHeightVar);
 
-    const mapRect = mapEl.getBoundingClientRect();
-    let xPct = 50, yPct = 50;
-    for (let i = 0; i < 40; i++) {
-      xPct = rand(8, 92);
-      yPct = rand(10, 86);
-      const xPx = (xPct / 100) * mapRect.width;
-      const yPx = (yPct / 100) * mapRect.height;
-      if (!pointWouldOverlapNoSpawn(xPx, yPx)) break;
-    }
+  const introScreen = document.getElementById("introScreen");
+  const introStartBtn = document.getElementById("introStartBtn");
+  const startScreen = document.getElementById("startScreen");
+  const startBtn = document.getElementById("startBtn");
+  const teamScreen = document.getElementById("teamScreen");
+  const teamConfirmBtn = document.getElementById("teamConfirmBtn");
 
-    point.style.left = `${xPct}%`;
-    point.style.top = `${yPct}%`;
+  // Ir a la pantalla de selección de avatar al hacer clic en "Comenzar"
+  introStartBtn.addEventListener("click", () => {
+    introScreen.classList.add("hidden");
+    startScreen.classList.remove("hidden");
+  });
 
-    const state = {
-      mission,
-      pointEl: point,
-      remainingMs: 2 * 60 * 1000,
-      lastTickAt: performance.now(),
-      phase: "spawned",
-      isPaused: false,
-      assignedCharIds: new Set(),
-      chance: null,
-      execRemainingMs: null
-    };
+  // Ir a la pantalla de selección de personajes
+  startBtn.addEventListener("click", () => {
+    startScreen.classList.add("hidden");
+    teamScreen.classList.remove("hidden");
+    renderTeamSelection(); // Renderizamos los personajes
+  });
 
-    point.addEventListener("click", () => onPointClick(mission.id));
-    point.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        onPointClick(mission.id);
-      }
+  let selectedTeamIds = new Set();
+  const teamGrid = document.getElementById("teamGrid");
+  const teamCountEl = document.getElementById("teamCount");
+  const teamHint = document.getElementById("teamHint");
+
+  // Renderizar los personajes en la selección
+  function renderTeamSelection() {
+    teamGrid.innerHTML = "";
+    TEAM_MEMBERS.forEach(p => {
+      const isSelected = selectedTeamIds.has(p.id);
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "team-card" + (isSelected ? " selected" : "");
+      btn.innerHTML = `
+        <img src="${p.img}" alt="${p.name}" />
+        <div class="team-card-name">${p.name}</div>
+      `;
+
+      btn.addEventListener("click", () => {
+        if (isSelected) selectedTeamIds.delete(p.id);
+        else {
+          if (selectedTeamIds.size >= 6) return;
+          selectedTeamIds.add(p.id);
+        }
+        renderTeamSelection();
+        updateTeamUI();
+      });
+
+      teamGrid.appendChild(btn);
     });
 
-    mapEl.appendChild(point);
-    activePoints.set(mission.id, state);
+    updateTeamUI();
   }
 
-  // Función que se llama cuando se hace clic en un punto de misión
-  function onPointClick(missionId) {
-    const st = activePoints.get(missionId);
-    if (!st) return;
-    if (completedMissionIds.has(missionId)) return;
+  // Actualizar la cantidad de personajes seleccionados
+  function updateTeamUI() {
+    const n = selectedTeamIds.size;
+    teamCountEl.textContent = String(n);
+    teamConfirmBtn.disabled = n !== 6;
 
-    if (specialArmed && !specialUsed) {
-      specialUsed = true;
-      specialArmed = false;
-      setSpecialArmedUI(false);
-      openForcedWinRoulette(missionId);
-      return;
-    }
-
-    if (st.phase === "spawned") return openMission(missionId);
-    if (st.phase === "executing") return;
-    if (st.phase === "ready") return openRouletteForMission(missionId);
+    if (n < 6) teamHint.textContent = "Elige 6 personajes para continuar.";
+    else teamHint.textContent = "Perfecto. Pulsa Confirmar para empezar.";
   }
 
-  // Mostrar la habilidad especial del avatar cuando se hace clic en él
-  playerImg.addEventListener("click", openSpecialModal);
+  // Confirmar la selección de personajes y comenzar el juego
+  teamConfirmBtn.addEventListener("click", () => {
+    if (selectedTeamIds.size !== 6) return;
+    // Aquí se puede agregar más lógica para comenzar el juego
+    console.log("Equipo seleccionado: ", selectedTeamIds);
+    // Ahora podemos iniciar el juego
+    teamScreen.classList.add("hidden");
+    gameRoot.classList.remove("hidden");
+    startGame();
+  });
 
-  // Función para abrir la habilidad especial
-  function openSpecialModal() {
-    if (specialUsed) return;
-    setGlobalPause(true);
-    showModal(specialModal);
+  // Función para empezar el juego
+  function startGame() {
+    console.log("Iniciando el juego...");
+    // Aquí puedes incluir la lógica para empezar con los puntos rojos, etc.
   }
-
-  // Resto de la lógica para el juego, incluyendo la ruleta y las misiones
-  // Código de ruleta, baraja y otras interacciones aquí
-
 });
