@@ -1,19 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  function setAppHeightVar() {
-    const h = window.innerHeight;
-    document.documentElement.style.setProperty("--appH", `${h}px`);
-  }
-  setAppHeightVar();
-  window.addEventListener("resize", setAppHeightVar);
-  window.addEventListener("orientationchange", setAppHeightVar);
-
   const introStartBtn = document.getElementById("introStartBtn");
   const startScreen = document.getElementById("startScreen");
   const teamScreen = document.getElementById("teamScreen");
-  const teamGrid = document.getElementById("teamGrid");
+  const gameRoot = document.getElementById("gameRoot");
+
+  const introInfoBtn = document.getElementById("introInfoBtn");
+  const infoModal = document.getElementById("infoModal");
+  const closeInfoBtn = document.getElementById("closeInfoBtn");
+
+  const teamConfirmBtn = document.getElementById("teamConfirmBtn");
   const teamCountEl = document.getElementById("teamCount");
   const teamHint = document.getElementById("teamHint");
-  const teamConfirmBtn = document.getElementById("teamConfirmBtn");
+
   const characterRow = document.getElementById("characterRow");
 
   let selectedTeamIds = new Set();
@@ -33,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Función para renderizar la selección de personajes
   function renderTeamSelection() {
-    teamGrid.innerHTML = "";
     characterRow.innerHTML = "";  // Limpiar la fila antes de agregar nuevos personajes
 
     TEAM_MEMBERS.forEach(p => {
@@ -69,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
         updateTeamUI();
       });
 
-      // En lugar de agregar a teamGrid, lo agregamos a la fila de personajes
       characterRow.appendChild(btn);
     });
 
@@ -96,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Iniciar juego
   function startGame() {
     teamScreen.classList.add("hidden");
-    // Lógica para iniciar el juego
+    gameRoot.classList.remove("hidden");
   }
 
   introStartBtn.addEventListener("click", () => {
