@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Setea la altura de la app según la ventana
   function setAppHeightVar() {
     const h = window.innerHeight;
     document.documentElement.style.setProperty("--appH", `${h}px`);
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const teamConfirmBtn = document.getElementById("teamConfirmBtn");
   const gameRoot = document.getElementById("gameRoot");
 
-  let selectedTeamIds = new Set();
+  let selectedTeamIds = new Set(); // Para almacenar personajes seleccionados
 
   // Pantalla de inicio
   introStartBtn.addEventListener("click", () => {
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
   startBtn.addEventListener("click", () => {
     startScreen.classList.add("hidden");
     teamScreen.classList.remove("hidden");
-    renderTeamSelection();  // Renderiza los personajes
+    renderTeamSelection();  // Renderiza los personajes en la selección
   });
 
   // Renderización de los personajes seleccionables
