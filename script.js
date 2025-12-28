@@ -34,31 +34,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Renderizar los personajes en la selección
   function renderTeamSelection() {
-    teamGrid.innerHTML = "";
+    teamGrid.innerHTML = ""; // Limpiamos el grid antes de renderizar
+
+    // Asegurándonos de que los personajes están disponibles en el array TEAM_MEMBERS
     TEAM_MEMBERS.forEach(p => {
       const isSelected = selectedTeamIds.has(p.id);
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "team-card" + (isSelected ? " selected" : "");
+
       btn.innerHTML = `
         <img src="${p.img}" alt="${p.name}" />
         <div class="team-card-name">${p.name}</div>
       `;
 
+      // Añadimos la acción para seleccionar/deseleccionar los personajes
       btn.addEventListener("click", () => {
-        if (isSelected) selectedTeamIds.delete(p.id);
-        else {
-          if (selectedTeamIds.size >= 6) return;
+        if (isSelected) {
+          selectedTeamIds.delete(p.id);
+        } else {
+          if (selectedTeamIds.size >= 6) return; // No permitir más de 6 seleccionados
           selectedTeamIds.add(p.id);
         }
-        renderTeamSelection();
+        renderTeamSelection(); // Vuelvo a renderizar la selección de personajes
         updateTeamUI();
       });
 
-      teamGrid.appendChild(btn);
+      teamGrid.appendChild(btn); // Añadimos el botón con el personaje al grid
     });
 
-    updateTeamUI();
+    updateTeamUI(); // Actualizamos la interfaz del equipo seleccionado
   }
 
   // Actualizar la cantidad de personajes seleccionados
@@ -67,24 +72,41 @@ document.addEventListener("DOMContentLoaded", () => {
     teamCountEl.textContent = String(n);
     teamConfirmBtn.disabled = n !== 6;
 
-    if (n < 6) teamHint.textContent = "Elige 6 personajes para continuar.";
-    else teamHint.textContent = "Perfecto. Pulsa Confirmar para empezar.";
+    if (n < 6) {
+      teamHint.textContent = "Elige 6 personajes para continuar.";
+    } else {
+      teamHint.textContent = "Perfecto. Pulsa Confirmar para empezar.";
+    }
   }
 
   // Confirmar la selección de personajes y comenzar el juego
   teamConfirmBtn.addEventListener("click", () => {
-    if (selectedTeamIds.size !== 6) return;
-    // Aquí se puede agregar más lógica para comenzar el juego
+    if (selectedTeamIds.size !== 6) return; // Asegurarse de que se seleccionaron exactamente 6 personajes
+
     console.log("Equipo seleccionado: ", selectedTeamIds);
-    // Ahora podemos iniciar el juego
+    // Pasamos a la pantalla de juego
     teamScreen.classList.add("hidden");
     gameRoot.classList.remove("hidden");
-    startGame();
+    startGame(); // Iniciamos el juego
   });
 
-  // Función para empezar el juego
+  // Función para empezar el juego (solo para la demostración, más lógica se agregará aquí)
   function startGame() {
     console.log("Iniciando el juego...");
-    // Aquí puedes incluir la lógica para empezar con los puntos rojos, etc.
+    // Aquí puedes incluir la lógica para comenzar con los puntos rojos, etc.
+    spawnMissionPoints(); // Función para crear puntos de misión
+  }
+
+  // Función para crear los puntos rojos en el mapa (solo para la demostración)
+  function spawnMissionPoints() {
+    // Generamos algunos puntos de misión en el mapa
+    const map = document.getElementById("map");
+    for (let i = 0; i < 5; i++) {
+      const point = document.createElement("div");
+      point.classList.add("point");
+      point.style.left = `${Math.random() * 80 + 10}%`; // Posiiones aleatorias
+      point.style.top = `${Math.random() * 80 + 10}%`; // Posiiones aleatorias
+      map.appendChild(point);
+    }
   }
 });
