@@ -12,31 +12,30 @@ document.addEventListener("DOMContentLoaded", () => {
   const startScreen = document.getElementById("startScreen");
   const startBtn = document.getElementById("startBtn");
   const teamScreen = document.getElementById("teamScreen");
+  const teamGrid = document.getElementById("teamGrid");
+  const teamCountEl = document.getElementById("teamCount");
+  const teamHint = document.getElementById("teamHint");
   const teamConfirmBtn = document.getElementById("teamConfirmBtn");
+  const gameRoot = document.getElementById("gameRoot");
 
-  // Ir a la pantalla de selección de avatar al hacer clic en "Comenzar"
+  let selectedTeamIds = new Set();
+
+  // Pantalla de inicio
   introStartBtn.addEventListener("click", () => {
     introScreen.classList.add("hidden");
     startScreen.classList.remove("hidden");
   });
 
-  // Ir a la pantalla de selección de personajes
+  // Pantalla de selección de avatar
   startBtn.addEventListener("click", () => {
     startScreen.classList.add("hidden");
     teamScreen.classList.remove("hidden");
-    renderTeamSelection(); // Renderizamos los personajes
+    renderTeamSelection();  // Renderiza los personajes
   });
 
-  let selectedTeamIds = new Set();
-  const teamGrid = document.getElementById("teamGrid");
-  const teamCountEl = document.getElementById("teamCount");
-  const teamHint = document.getElementById("teamHint");
-
-  // Renderizar los personajes en la selección
+  // Renderización de los personajes seleccionables
   function renderTeamSelection() {
-    teamGrid.innerHTML = ""; // Limpiamos el grid antes de renderizar
-
-    // Asegurándonos de que los personajes están disponibles en el array TEAM_MEMBERS
+    teamGrid.innerHTML = ""; // Limpiar el grid de personajes
     TEAM_MEMBERS.forEach(p => {
       const isSelected = selectedTeamIds.has(p.id);
       const btn = document.createElement("button");
@@ -48,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="team-card-name">${p.name}</div>
       `;
 
-      // Añadimos la acción para seleccionar/deseleccionar los personajes
+      // Agregar la acción para seleccionar o deseleccionar el personaje
       btn.addEventListener("click", () => {
         if (isSelected) {
           selectedTeamIds.delete(p.id);
@@ -56,17 +55,17 @@ document.addEventListener("DOMContentLoaded", () => {
           if (selectedTeamIds.size >= 6) return; // No permitir más de 6 seleccionados
           selectedTeamIds.add(p.id);
         }
-        renderTeamSelection(); // Vuelvo a renderizar la selección de personajes
+        renderTeamSelection();  // Volver a renderizar los personajes
         updateTeamUI();
       });
 
-      teamGrid.appendChild(btn); // Añadimos el botón con el personaje al grid
+      teamGrid.appendChild(btn); // Añadir el botón con el personaje al grid
     });
 
-    updateTeamUI(); // Actualizamos la interfaz del equipo seleccionado
+    updateTeamUI(); // Actualizar la interfaz de usuario
   }
 
-  // Actualizar la cantidad de personajes seleccionados
+  // Actualiza el conteo de personajes seleccionados y habilita el botón de confirmación
   function updateTeamUI() {
     const n = selectedTeamIds.size;
     teamCountEl.textContent = String(n);
@@ -79,27 +78,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Confirmar la selección de personajes y comenzar el juego
+  // Confirmación de la selección de personajes y transición al juego
   teamConfirmBtn.addEventListener("click", () => {
-    if (selectedTeamIds.size !== 6) return; // Asegurarse de que se seleccionaron exactamente 6 personajes
+    if (selectedTeamIds.size !== 6) return; // Asegurarse de que se seleccionaron 6 personajes
 
     console.log("Equipo seleccionado: ", selectedTeamIds);
-    // Pasamos a la pantalla de juego
     teamScreen.classList.add("hidden");
     gameRoot.classList.remove("hidden");
-    startGame(); // Iniciamos el juego
+    startGame(); // Comienza el juego
   });
 
-  // Función para empezar el juego (solo para la demostración, más lógica se agregará aquí)
+  // Función para empezar el juego
   function startGame() {
     console.log("Iniciando el juego...");
-    // Aquí puedes incluir la lógica para comenzar con los puntos rojos, etc.
-    spawnMissionPoints(); // Función para crear puntos de misión
+    spawnMissionPoints(); // Crear puntos de misión (para que aparezcan los puntos rojos)
   }
 
-  // Función para crear los puntos rojos en el mapa (solo para la demostración)
+  // Función para crear los puntos rojos en el mapa
   function spawnMissionPoints() {
-    // Generamos algunos puntos de misión en el mapa
     const map = document.getElementById("map");
     for (let i = 0; i < 5; i++) {
       const point = document.createElement("div");
