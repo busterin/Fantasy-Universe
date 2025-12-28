@@ -478,6 +478,212 @@ img{ max-width:100%; height:auto; }
 .modal-actions{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
 .modal-actions.end{ justify-content:flex-end; }
 
+/* ---------- ROULETTE ---------- */
+.roulette-card{ width:min(620px, 100%); }
+.roulette-wrap{ display:flex; flex-direction:column; align-items:center; gap:12px; padding: 6px 0 2px; }
+.roulette{ position:relative; width: 220px; height: 220px; }
+
+.roulette-pointer{
+  position:absolute;
+  top:-10px;
+  left:50%;
+  transform: translateX(-50%);
+  font-size:18px;
+  color: #fff;
+  text-shadow: 0 10px 18px rgba(0,0,0,.35);
+}
+.roulette-wheel{
+  width: 220px; height: 220px;
+  border-radius:50%;
+  border: 1px solid rgba(255,255,255,.12);
+  background: conic-gradient(from 0deg, rgba(46,229,157,.85) 0 40%, rgba(255,59,59,.85) 40% 100%);
+  box-shadow: 0 18px 50px rgba(0,0,0,.25);
+  transform: rotate(0deg);
+}
+.roulette-outcome{ min-height: 22px; font-weight:900; letter-spacing:.2px; color:#fff; }
+
+/* ---------- FINAL ---------- */
+.final-score{ display:flex; align-items:baseline; justify-content:space-between; padding: 10px 4px; }
+.final-label{ color: rgba(255,255,255,.78); font-weight:700; }
+.final-value{ font-size:42px; font-weight:1000; color:#fff; }
+
+/* ---------- DECK ---------- */
+.deck-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.deck-card{
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  cursor:pointer;
+  overflow:hidden;
+  transition: transform .12s ease, border-color .12s ease, background .12s ease;
+  box-shadow: 0 10px 26px rgba(0,0,0,.18);
+  padding: 0;
+  text-align:left;
+}
+.deck-card:hover{ transform: translateY(-1px); }
+
+.deck-card img{
+  width: 100%;
+  height: 110px;
+  object-fit: contain;
+  background: rgba(255,255,255,.04);
+  display:block;
+}
+
+.deck-card .deck-card-name{
+  padding: 7px 9px;
+  font-weight: 900;
+  font-size: 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 8px;
+  color:#fff;
+}
+
+.deck-card .pill{
+  padding: 5px 8px;
+  font-size: 11px;
+}
+
+/* ---------- TEAM SELECTION (6) ---------- */
+.team-top{
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.team-counter{
+  font-weight: 900;
+  letter-spacing: .2px;
+  color:#fff;
+}
+
+.team-grid{
+  margin-top: 12px;
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+#teamScreen .start-card{
+  max-height: calc(var(--appH) - 36px);
+  max-height: calc(100dvh - 36px);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+#teamGrid{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow:auto;
+  -webkit-overflow-scrolling: touch;
+  padding-right: 6px;
+}
+
+.team-card{
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  cursor:pointer;
+  overflow:hidden;
+  transition: transform .12s ease, border-color .12s ease, background .12s ease;
+  box-shadow: 0 10px 26px rgba(0,0,0,.18);
+  padding: 0;
+  text-align:left;
+  position: relative; /* ✅ para overlay de etiquetas */
+}
+.team-card:hover{ transform: translateY(-1px); }
+
+.team-card img{
+  width: 100%;
+  height: 110px;
+  object-fit: contain;
+  background: rgba(255,255,255,.04);
+  display:block;
+}
+
+/* ✅ zona inferior con nombre + botón */
+.team-card .team-card-name{
+  padding: 7px 9px 10px;
+  font-weight: 900;
+  font-size: 12px;
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+  color:#fff;
+}
+
+.team-card .team-card-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 8px;
+}
+
+/* ✅ etiquetas visibles y SIN recorte (permitimos overlay sobre imagen) */
+.team-card .team-tags{
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  right: 8px;
+  display:flex;
+  gap: 6px;
+  flex-wrap:wrap;
+  align-items:flex-start;
+  z-index: 2;
+
+  /* ✅ superposición sobre imagen */
+  pointer-events: none;
+}
+
+.team-card .tag-pill{
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  color: #fff;
+  background: rgba(0,0,0,.28);
+  line-height: 1.15;
+
+  /* ✅ no recortar texto */
+  white-space: normal;
+  max-width: 100%;
+}
+
+.team-card.selected{
+  border-color: rgba(255,255,255,.70);
+  background: rgba(255,255,255,.10);
+  box-shadow: 0 10px 26px rgba(0,0,0,.10);
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes pulse{
+  0%{ box-shadow: 0 0 0 0 rgba(255,59,59,.55); opacity:1; }
+  70%{ box-shadow: 0 0 0 14px rgba(255,59,59,0); opacity:1; }
+  100%{ box-shadow: 0 0 0 0 rgba(255,59,59,0); opacity:.85; }
+}
+@keyframes pulseYellow{
+  0%{ box-shadow: 0 0 0 0 rgba(255,213,74,.55); opacity:1; }
+  70%{ box-shadow: 0 0 0 16px rgba(255,213,74,0); opacity:1; }
+  100%{ box-shadow: 0 0 0 0 rgba(255,213,74,0); opacity:.9; }
+}
+@keyframes megaBlinkYellow{
+  0%{ transform: translate(-50%, -50%) scale(1); filter: brightness(1); }
+  50%{ transform: translate(-50%, -50%) scale(1.45); filter: brightness(1.8); }
+  100%{ transform: translate(-50%, -50%) scale(1); filter: brightness(1); }
+}
+@keyframes blink{
+  0%,100%{ opacity:1; }
+  50%{ opacity:.35; }
+}
+
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 520px){
   .topbar{ flex-direction:column; align-items:stretch; }
@@ -504,27 +710,4 @@ img{ max-width:100%; height:auto; }
     max-height: calc(var(--appH) - 28px);
     max-height: calc(100dvh - 28px);
   }
-}
-/* ---------- TEAM SELECTION (6) ---------- */
-.team-grid {
-  margin-top: 12px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columnas */
-  gap: 10px; /* Espacio entre los elementos */
-  padding: 0 10px; /* Asegura que los personajes estén dentro del recuadro */
-  overflow-y: auto; /* Permite desplazamiento si es necesario */
-  max-height: 60vh; /* Limitar la altura para que no se desborde */
-  margin-bottom: 20px; /* Asegura que haya espacio para el botón */
-}
-
-.modal-actions.end {
-  margin-top: 12px;
-  display: flex;
-  justify-content: center; /* Centra el botón Confirmar */
-  align-items: center; /* Asegura que el botón esté bien centrado */
-}
-
-#teamConfirmBtn {
-  margin-top: 10px;
-  width: 100%; /* Asegura que el botón ocupe todo el ancho posible */
 }
