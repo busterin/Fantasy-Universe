@@ -13,17 +13,20 @@
         <!-- Cuadrícula de puntos -->
         <div class="grid-container" id="grid"></div>
         
+        <!-- Ventana emergente de misión -->
+        <div class="mission-popup hidden" id="mission-popup">
+            <div class="mission-popup-content">
+                <h3 id="mission-title"></h3>
+                <p id="mission-description"></p>
+                <button id="assign-character">Asignar Personaje</button>
+                <button id="close-popup">Cerrar</button>
+            </div>
+        </div>
+        
         <!-- Selección de Personajes -->
         <div class="characters-container">
             <h2>Elige un Personaje</h2>
             <div id="characters"></div>
-        </div>
-
-        <!-- Misión actual -->
-        <div class="mission-container" id="mission">
-            <h2>Misión</h2>
-            <p id="mission-status">Esperando asignación...</p>
-            <div id="mission-progress"></div>
         </div>
 
         <!-- Ruleta -->
@@ -31,7 +34,8 @@
             <p>Probabilidad: <span id="roulette-result">0%</span></p>
             <button id="activate-roulette">Activar Ruleta</button>
         </div>
-        
+
+        <!-- Temporizador -->
         <div id="timer">Tiempo Restante: 2:00</div>
     </div>
     <script src="script.js"></script>
