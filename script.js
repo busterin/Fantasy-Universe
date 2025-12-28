@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Setea la altura de la app según la ventana
   function setAppHeightVar() {
     const h = window.innerHeight;
     document.documentElement.style.setProperty("--appH", `${h}px`);
